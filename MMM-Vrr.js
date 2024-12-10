@@ -409,6 +409,9 @@ Module.register("MMM-Vrr", {
       case "TaxiBus":
         symbolType = "taxi";
         break;
+      case "Stadtbahn":
+        symbolType = "subway"; 
+        break;
       default:
         symbolType = "bus";
         break;
