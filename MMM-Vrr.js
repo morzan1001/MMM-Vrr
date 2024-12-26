@@ -93,10 +93,10 @@ Module.register("MMM-Vrr", {
    */
   getData: function () {
     let self = this;
-
+  
     let urlApi = this.getUrl();
     let retry = true;
-
+  
     let dataRequest = new XMLHttpRequest();
     dataRequest.open("GET", urlApi, true);
     dataRequest.onreadystatechange = function () {
@@ -108,12 +108,15 @@ Module.register("MMM-Vrr", {
           Log.error(self.name, this.status);
           retry = false;
         } else {
-          Log.error(self.name, "Could not load data.");
+          Log.error(self.name, "Could not load data. Status: " + this.status + ", Error: " + this.statusText);
         }
         if (retry) {
           self.scheduleUpdate(self.loaded ? -1 : self.config.retryDelay);
         }
       }
+    };
+    dataRequest.onerror = function () {
+      Log.error(self.name, "API request failed: " + urlApi);
     };
     dataRequest.send();
   },
